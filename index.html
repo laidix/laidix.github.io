@@ -7,16 +7,55 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
-
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       margin: 0;
-      height: 100vh;
-      display: flex;
+      padding: 0;
+      background: url("images/Bg.png") center/cover no-repeat;
+      font-family: "Lexend Giga", sans-serif;
+    }
+
+    #hero {
+      color: white;
+    }
+
+    #content {
+      padding-top: 150px;
+      display:inline-block;
       align-items: center;
       justify-content: center;
-      background: url("images/Bg.png") center/cover no-repeat;
+      text-align: center;
+    } 
+
+    #content h1 {
+      color: #131337;
+      padding-bottom: 50px;
+    }
+
+    #content p {
+      color: #131337;
+      font-size: 20px;
+      padding: 0 20px;
+    } 
+
+    section {
+    height: 100vh; /* each section fills one screen */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
 
     svg {
@@ -26,7 +65,6 @@
 
     text {
       font-weight: 700;
-      font-family: "Lexend Giga", sans-serif;
       cursor: pointer;
       transition: transform 0.5s ease;
     }
@@ -34,39 +72,161 @@
     text:hover {
       transform: translate(100px, 60px);
     }
+
+    #mainText {
+      font-size: 12vw; /* Responsive font size */
+    }
+
+    #subText {
+      font-size: 5vw; /* Smaller than main text */
+    }
+
+    #scrollButton {
+      cursor: pointer;
+      animation: bounce 1.5s infinite;
+      pointer-events: auto;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(12px); }
+    }
+
+    /* Media queries for different screen sizes */
+    @media (min-width: 768px) {
+      #mainText {
+        font-size: 96px; /* Fixed size for larger screens */
+      }
+      
+      #subText {
+        font-size: 40px; /* Fixed size for larger screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      #scrollButton {
+        width: 40px !important;
+        height: 40px !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <svg viewBox="0 0 100% 100%">
-    <defs>
-      <!-- White = visible, Black = transparent -->
-      <mask id="cutout">
-        <rect width="100%" height="100%" fill="white"/>
-        <text x="50%" y="50%" text-anchor="middle" dy=".35em" fill="black" font-size="120px" letter-spacing="-10px">
-          laidix
-        </text>
+  <section id="hero">
+    <div class="container">
+      <svg id="fullScreenSVG">
+        <defs>
+          <mask id="cutout">
+            <rect id="maskRect" fill="white" />
+            <text id="mainText" text-anchor="middle" fill="black">laidix</text>
+            <text id="subText" text-anchor="middle" fill="black">welcome.</text>
+            <image id="img1" href="images/Form1.png"/>
+            <image id="img2" href="images/Form2.png"/>
+            <image id="img3" href="images/Form3.png"/>
+            <image id="img4" href="images/Form4.png"/>
+            <!-- Scroll button as part of the mask -->
+            <image id="scrollButton" href="images/Arrow.png" width="50px"/>
+          </mask>
+        </defs>
+        <rect id="bgRect" fill="#131337" mask="url(#cutout)" />
+      </svg>
+    </div>
+  </section>
+  <section id="content">
+    <h1>Welcome.</h1><br>
+    <p>Hemlo guys, its website is just a show case rn. The improvements youll see on the next commit on my github!!</p><br>
+    <a href="https://github.com/laidix">My github</a>
+  </section>
 
-        <text x="50%" y="62.5%" text-anchor="middle" fill="black" font-size="30px">
-          welcome.
-        </text>
+  <script>
+    // DOM elements
+    const svg = document.getElementById("fullScreenSVG");
+    const maskRect = document.getElementById("maskRect");
+    const mainText = document.getElementById("mainText");
+    const subText = document.getElementById("subText");
+    const images = [
+      document.getElementById("img1"),
+      document.getElementById("img2"),
+      document.getElementById("img3"),
+      document.getElementById("img4")
+    ];
+    const bgRect = document.getElementById("bgRect");
+    const scrollButton = document.getElementById("scrollButton");
+    
+    // Scroll state
+    let isScrolledDown = false;
 
-        <image x="-20%" y="-5%" height="50%" width="50%" href="images/Form1.png" />
-        
-        <image x="-20%" y="60%" height="50%" width="50%" href="images/Form2.png" />
+    // Update SVG elements based on window size
+    function updateSVG() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
 
-        <image x="70%" y="-15%" height="50%" width="50%" href="images/Form3.png" />
+      svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      maskRect.setAttribute("width", w);
+      maskRect.setAttribute("height", h);
+      bgRect.setAttribute("width", w);
+      bgRect.setAttribute("height", h);
 
-        <image x="70%" y="60%" height="50%" width="50%" href="images/Form4.png" />
+      // Position main text
+      mainText.setAttribute("x", w / 2);
+      mainText.setAttribute("y", h / 2);
+      
+      // Position subtext (smaller than main text)
+      subText.setAttribute("x", w / 2);
+      subText.setAttribute("y", h / 2 + parseFloat(getComputedStyle(mainText).fontSize) * 0.6);
+      scrollButton.setAttribute("x", (w / 2) - (parseFloat(scrollButton.getAttribute("width")) / 2));
+      scrollButton.setAttribute("y", h * 0.85);
+      // Position images
+      const imagePositions = [
+        { x: -0.2 * w, y: -0.05 * h, width: 0.5 * w, height: 0.5 * h },
+        { x: -0.2 * w, y: 0.6 * h, width: 0.5 * w, height: 0.5 * h },
+        { x: 0.7 * w, y: -0.15 * h, width: 0.5 * w, height: 0.5 * h },
+        { x: 0.7 * w, y: 0.6 * h, width: 0.5 * w, height: 0.5 * h },
+      ];
+      
+      images.forEach((img, index) => {
+        const pos = imagePositions[index];
+        img.setAttribute("x", pos.x);
+        img.setAttribute("y", pos.y);
+        img.setAttribute("width", pos.width);
+        img.setAttribute("height", pos.height);
+      });
+    }
 
-        <image x="45.75%" y="85%" height="7.5%" width="7.5%" href="images/circle.png" class="arrowcircle" />
+    // Toggle scroll position
+    function toggleScroll() {
+      if (isScrolledDown) {
+        const target = document.querySelector("#content");
+        target.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        scrollButton.classList.add('up');
+      }
+      isScrolledDown = !isScrolledDown;
+    }
 
-        <image x="47.45%" y="86.65%" height="4%" width="4%" href="images/Arrow 1.png" class="arrow"/>
+    // Initialize and set up event listeners
+    function init() {
+      updateSVG();
+      window.addEventListener("resize", updateSVG);
+      scrollButton.addEventListener("click", toggleScroll);
+      
+      // Add keyboard support for accessibility
+      scrollButton.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleScroll();
+        }
+      });
+      
+      // Make button focusable for accessibility
+      scrollButton.setAttribute('tabindex', '0');
+      scrollButton.setAttribute('role', 'button');
+      scrollButton.setAttribute('aria-label', 'Scroll to bottom or top');
+    }
 
-      </mask>
-    </defs>
-
-    <!-- Black rectangle with a hole -->
-    <rect width="100%" height="100%" fill="#131337" mask="url(#cutout)"/>
-  </svg>
+    // Start the application
+    init();
+  </script>
 </body>
 </html>
