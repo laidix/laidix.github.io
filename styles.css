@@ -1,51 +1,78 @@
-/* Background behind everything */
-.wrapper {
-  background: url("https://picsum.photos/1200/800") center/cover no-repeat;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* RESET AND FONT STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lexend Giga", sans-serif;
+    /* Removed background-color: black; from here to let JS control it on body */
 }
 
-/* Black panel */
-.panel {
-  width: 80%;
-  height: 60%;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* HERO CONTAINER: Positioning Context and Center Text */
+.hero {
+    position: relative; 
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* THIS IS CRUCIAL TO HIDE OFF-SCREEN PARTS OF CORNER SVGS */
 
-  /* Use the text as a mask */
-  -webkit-mask-image: none; /* will be set by child */
-  mask-image: none;
-  position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* The cutout text */
-.cutout {
-  font-size: 120px;
-  font-weight: bold;
-  margin: 0;
-  position: absolute;
-  left: 100px;
-  top: 80px;
-  cursor: pointer;
-
-  /* THIS makes it a hole */
-  color: transparent;
-  -webkit-text-stroke: 0;
-  -webkit-text-fill-color: transparent;
-  background: white;
-  -webkit-background-clip: text;
-  -webkit-mask-image: none;
-  -webkit-mask-composite: destination-out;
-  mix-blend-mode: destination-out;
-  transition: all 0.5s ease;
+/* TEXT CONTENT: Ensure it sits above the background and is colored */
+.text-content {
+    text-align: center;
+    position: relative; 
+    z-index: 10; /* Make sure text is on top */
 }
 
-/* Move when hovered */
-.cutout:hover {
-  left: 250px;
-  top: 150px;
+.hero h1 {
+    font-size: 6vw; /* Made bigger as requested */
+    margin-bottom: -1vw;
+}
+
+.hero p {
+    font-size: 2vw; /* Made bigger as requested */
+}
+
+/* CENTRAL SVG BACKGROUND */
+#center-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+    transform: scale(1.5); /* Scaled up as requested */
+}
+
+/* CORNER SVGS: PEAKING IN EFFECT */
+.corner-svg {
+    position: absolute;
+    width: 12.5vw; /* Responsive large size */
+    height: 12.5vw; /* Keeping aspect ratio */
+    z-index: 5; /* Between background and text */
+    /* Ensure the path inside fills the SVG area, if viewBox is set */
+    overflow: visible; 
+}
+
+#corner-tl {
+    top: -25vw; /* Pushed 20% of viewport height up */
+    left: -25vw; /* Pushed 20% of viewport width left */
+    transform: rotate(15deg);
+}
+#corner-tr {
+    top: -30vw;
+    right: 0vw;
+    transform: rotate(35deg);
+}
+#corner-bl {
+    bottom: 10vw;
+    left: -25vw;
+    transform: rotate(5deg);
+}
+#corner-br {
+    bottom: 12.5vw;
+    right: 15vw;
+    transform: rotate(10deg);
 }

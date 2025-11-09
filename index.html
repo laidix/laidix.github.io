@@ -1,232 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>laidix.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: url("images/Bg.png") center/cover no-repeat;
-      font-family: "Lexend Giga", sans-serif;
-    }
-
-    #content {
-      padding-top: 150px;
-      height: 100vh;
-      display:inline-block;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    } 
-
-    #content h1 {
-      color: #131337;
-      padding-bottom: 50px;
-    }
-
-    #content p {
-      color: #131337;
-      font-size: 20px;
-      padding: 0 20px;
-    } 
-
-    section {
-      width: 100%;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      position:relative;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    text {
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.5s ease;
-    }
-
-    text:hover {
-      transform: translate(100px, 60px);
-    }
-
-    #mainText {
-      font-size: 12vw; /* Responsive font size */
-    }
-
-    #subText {
-      font-size: 5vw; /* Smaller than main text */
-    }
-
-    #scrollButton {
-      cursor: pointer;
-      animation: bounce 1.5s infinite;
-      pointer-events: auto;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(12px); }
-    }
-
-    /* Media queries for different screen sizes */
-    @media (min-width: 768px) {
-      #mainText {
-        font-size: 96px; /* Fixed size for larger screens */
-      }
-      
-      #subText {
-        font-size: 40px; /* Fixed size for larger screens */
-      }
-    }
-
-    @media (max-width: 480px) {
-      #scrollButton {
-        width: 40px !important;
-        height: 40px !important;
-      }
-    }
-  </style>
-</head>
-<body>
-  <section id="hero">
-    <div class="container">
-      <svg id="fullScreenSVG">
-        <defs>
-          <mask id="cutout">
-            <rect id="maskRect" fill="white" />
-            <text id="mainText" text-anchor="middle" fill="black">laidix</text>
-            <text id="subText" text-anchor="middle" fill="black">welcome.</text>
-            <image id="img1" href="images/Form1.png"/>
-            <image id="img2" href="images/Form2.png"/>
-            <image id="img3" href="images/Form3.png"/>
-            <image id="img4" href="images/Form4.png"/>
-            <!-- Scroll button as part of the mask -->
-            <image id="scrollButton" href="images/Arrow.png" width="50px"/>
-          </mask>
-        </defs>
-        <rect id="bgRect" fill="#131337" mask="url(#cutout)" />
-      </svg>
-    </div>
-  </section>
-  <section id="content">
-    <h1>Welcome.</h1><br>
-    <p>Hemlo guys, its website is just a show case rn. The improvements youll see on the next commit on my github!!</p><br>
-    <a href="https://github.com/laidix">My github</a>
-  </section>
-
-  <script>
-    // DOM elements
-    const svg = document.getElementById("fullScreenSVG");
-    const maskRect = document.getElementById("maskRect");
-    const mainText = document.getElementById("mainText");
-    const subText = document.getElementById("subText");
-    const images = [
-      document.getElementById("img1"),
-      document.getElementById("img2"),
-      document.getElementById("img3"),
-      document.getElementById("img4")
-    ];
-    const bgRect = document.getElementById("bgRect");
-    const scrollButton = document.getElementById("scrollButton");
-    
-    // Scroll state
-    let isScrolledDown = false;
-
-    // Update SVG elements based on window size
-    function updateSVG() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-
-      svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-      maskRect.setAttribute("width", w);
-      maskRect.setAttribute("height", h);
-      bgRect.setAttribute("width", w);
-      bgRect.setAttribute("height", h);
-
-      // Position main text
-      mainText.setAttribute("x", w / 2);
-      mainText.setAttribute("y", h / 2);
-      
-      // Position subtext (smaller than main text)
-      subText.setAttribute("x", w / 2);
-      subText.setAttribute("y", h / 2 + parseFloat(getComputedStyle(mainText).fontSize) * 0.6);
-      scrollButton.setAttribute("x", (w / 2) - (parseFloat(scrollButton.getAttribute("width")) / 2));
-      scrollButton.setAttribute("y", h * 0.85);
-      // Position images
-      const imagePositions = [
-        { x: -0.2 * w, y: -0.05 * h, width: 0.5 * w, height: 0.5 * h },
-        { x: -0.2 * w, y: 0.6 * h, width: 0.5 * w, height: 0.5 * h },
-        { x: 0.7 * w, y: -0.15 * h, width: 0.5 * w, height: 0.5 * h },
-        { x: 0.7 * w, y: 0.6 * h, width: 0.5 * w, height: 0.5 * h },
-      ];
-      
-      images.forEach((img, index) => {
-        const pos = imagePositions[index];
-        img.setAttribute("x", pos.x);
-        img.setAttribute("y", pos.y);
-        img.setAttribute("width", pos.width);
-        img.setAttribute("height", pos.height);
-      });
-    }
-
-    // Toggle scroll position
-    function toggleScroll() {
-      if (isScrolledDown) {
-        const target = document.querySelector("#content");
-        target.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        scrollButton.classList.add('up');
-      }
-      isScrolledDown = !isScrolledDown;
-    }
-
-    // Initialize and set up event listeners
-    function init() {
-      updateSVG();
-      window.addEventListener("resize", updateSVG);
-      scrollButton.addEventListener("click", toggleScroll);
-      
-      // Add keyboard support for accessibility
-      scrollButton.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleScroll();
-        }
-      });
-      
-      // Make button focusable for accessibility
-      scrollButton.setAttribute('tabindex', '0');
-      scrollButton.setAttribute('role', 'button');
-      scrollButton.setAttribute('aria-label', 'Scroll to bottom or top');
-    }
-
-    // Start the application
-    init();
-  </script>
-</body>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
+        <script src="scripts.js" defer></script>
+        <title>laidix.</title>
+    </head>
+    <body>
+        <div class="hero">
+            <svg id="corner-tl" class="corner-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M338.584 189.998C364.427 238.164 344.902 281.771 295.066 295.061C281.771 344.902 238.164 364.422 189.998 338.584C141.831 364.427 98.2245 344.902 84.9337 295.066C35.0981 281.771 15.573 238.164 41.4157 189.998C15.573 141.831 35.0981 98.2245 84.9337 84.9337C98.2245 35.0981 141.831 15.573 189.998 41.4157C238.164 15.573 281.771 35.0981 295.061 84.9337C344.902 98.2245 364.422 141.831 338.584 189.998Z" fill="currentColor"/>
+            </svg>
+            <svg id="corner-tr" class="corner-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M63.0014 190C49.8954 174.339 42 154.126 42 132.06C42 82.321 82.1131 42 131.595 42C153.99 42 174.466 50.2594 190.173 63.9131C205.843 50.2594 226.271 42 248.614 42C297.981 42 338 82.321 338 132.06C338 154.126 330.123 174.339 317.048 190C330.123 205.661 338 225.874 338 247.94C338 297.679 297.981 338 248.614 338C226.271 338 205.843 329.741 190.173 316.087C174.466 329.741 153.99 338 131.595 338C82.1131 338 42 297.679 42 247.94C42 225.874 49.8954 205.661 63.0014 190Z" fill="currentColor"/>
+            </svg>
+            <svg id="corner-bl" class="corner-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M142.67 51.7842C146.243 48.6394 148.029 47.067 149.671 45.7954C173.425 27.4015 206.575 27.4015 230.329 45.7954C231.971 47.067 233.757 48.6394 237.33 51.7842C238.526 52.8372 239.124 53.3636 239.724 53.8672C248.136 60.9247 258.171 65.7683 268.92 67.9594C269.688 68.1158 270.471 68.2562 272.038 68.537C276.719 69.3756 279.059 69.7949 281.075 70.2889C310.234 77.4346 330.902 103.411 331.364 133.493C331.396 135.573 331.283 137.953 331.057 142.713C330.982 144.307 330.944 145.104 330.925 145.888C330.665 156.88 333.143 167.763 338.136 177.553C338.493 178.252 338.872 178.953 339.63 180.356C341.894 184.547 343.026 186.642 343.897 188.53C356.503 215.834 349.127 248.226 325.949 267.344C324.347 268.666 322.42 270.061 318.566 272.852C317.276 273.787 316.63 274.254 316.007 274.729C307.27 281.377 300.326 290.105 295.803 300.122C295.48 300.837 295.169 301.571 294.547 303.04C292.69 307.427 291.761 309.62 290.832 311.48C277.393 338.382 247.526 352.798 218.162 346.556C216.132 346.124 213.842 345.484 209.262 344.204C207.728 343.776 206.962 343.562 206.203 343.369C195.569 340.668 184.431 340.668 173.797 343.369C173.038 343.562 172.272 343.776 170.738 344.204C166.158 345.484 163.868 346.124 161.838 346.556C132.474 352.798 102.607 338.382 89.168 311.48C88.2388 309.62 87.3102 307.427 85.453 303.04C84.8311 301.571 84.5202 300.837 84.1975 300.122C79.6741 290.105 72.7297 281.377 63.993 274.729C63.3696 274.254 62.7244 273.787 61.434 272.852C57.5801 270.061 55.6532 268.666 54.0507 267.344C30.873 248.226 23.4965 215.834 36.1027 188.53C36.9742 186.642 38.1062 184.547 40.3703 180.356C41.1283 178.953 41.5074 178.252 41.8636 177.553C46.8568 167.763 49.3353 156.88 49.0745 145.888C49.0559 145.104 49.0182 144.307 48.9426 142.713C48.7168 137.953 48.6039 135.573 48.6359 133.493C49.0982 103.411 69.7665 77.4346 98.9252 70.2889C100.941 69.7949 103.281 69.3756 107.962 68.537C109.529 68.2562 110.312 68.1158 111.08 67.9594C121.829 65.7683 131.864 60.9247 140.276 53.8672C140.876 53.3636 141.474 52.8372 142.67 51.7842Z" fill="currentColor"/>
+            </svg>
+            <svg id="corner-br" class="corner-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <path d="M154.828 43.2761C156.574 41.8503 157.448 41.1374 158.245 40.5355C177.03 26.3553 202.97 26.3553 221.755 40.5355C222.552 41.1374 223.425 41.8503 225.172 43.2761C225.952 43.9126 226.342 44.2309 226.727 44.5338C235.567 51.4793 246.406 55.4152 257.652 55.7641C258.143 55.7793 258.647 55.7856 259.654 55.798C261.911 55.826 263.039 55.84 264.037 55.8903C287.563 57.0747 307.435 73.7112 312.689 96.621C312.912 97.5933 313.121 98.6996 313.541 100.912C313.728 101.9 313.822 102.393 313.922 102.873C316.219 113.863 321.986 123.829 330.377 131.309C330.743 131.635 331.125 131.963 331.888 132.619C333.599 134.087 334.454 134.822 335.187 135.501C352.445 151.495 356.95 176.984 346.215 197.904C345.76 198.791 345.208 199.773 344.104 201.737C343.611 202.614 343.364 203.052 343.132 203.484C337.812 213.376 335.809 224.709 337.418 235.82C337.488 236.305 337.569 236.801 337.732 237.793C338.096 240.015 338.278 241.126 338.402 242.116C341.318 265.437 328.347 287.851 306.647 296.992C305.726 297.38 304.67 297.778 302.559 298.574C301.617 298.93 301.146 299.108 300.69 299.289C290.241 303.455 281.406 310.852 275.48 320.396C275.221 320.812 274.964 321.244 274.449 322.108C273.297 324.044 272.721 325.012 272.178 325.849C259.387 345.585 235.011 354.437 212.498 347.522C211.543 347.228 210.477 346.856 208.347 346.113C207.396 345.781 206.921 345.615 206.455 345.462C195.767 341.952 184.233 341.952 173.545 345.462C173.079 345.615 172.603 345.781 171.652 346.113C169.522 346.856 168.457 347.228 167.502 347.522C144.989 354.437 120.613 345.585 107.822 325.849C107.279 325.012 106.703 324.044 105.55 322.108C105.036 321.244 104.779 320.812 104.52 320.395C98.5939 310.852 89.7583 303.455 79.3096 299.289C78.8539 299.108 78.3827 298.93 77.4404 298.574C75.3294 297.778 74.274 297.38 73.3529 296.992C51.6523 287.851 38.6819 265.437 41.598 242.116C41.7218 241.126 41.9039 240.015 42.2682 237.793C42.4308 236.801 42.5121 236.305 42.5822 235.82C44.1908 224.709 42.188 213.376 36.8675 203.484C36.6354 203.052 36.389 202.614 35.8962 201.737C34.7921 199.773 34.2401 198.791 33.7845 197.904C23.0499 176.984 27.5544 151.495 44.8128 135.501C45.5454 134.822 46.4007 134.087 48.1113 132.619C48.875 131.963 49.2568 131.635 49.6228 131.309C58.0134 123.829 63.7804 113.863 66.0777 102.873C66.1779 102.393 66.2715 101.9 66.4588 100.912C66.8783 98.6996 67.088 97.5933 67.311 96.621C72.5652 73.7112 92.4369 57.0747 115.962 55.8903C116.961 55.84 118.089 55.826 120.346 55.798C121.353 55.7856 121.857 55.7793 122.347 55.7641C133.594 55.4152 144.432 51.4793 153.272 44.5338C153.658 44.2309 154.048 43.9126 154.828 43.2761Z" fill="currentColor"/>
+            </svg>
+            <div class="text-content">
+                <h1>laidix.</h1>
+                <p>welcome.</p>
+            </div>
+        </div>
+    </body>
 </html>
