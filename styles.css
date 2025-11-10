@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 /* RESET AND FONT STYLES */
 * {
     margin: 0;
@@ -17,6 +21,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+hr {
+    color: currentColor;
+    border: none;
+    height: 15px;
+    width: 100%;
 }
 
 /* TEXT CONTENT: Ensure it sits above the background and is colored */
@@ -79,7 +90,7 @@
     bottom: 10vw;
     left: -25vw;
     transform-origin: 100% 0%;
-    animation-delay: 10s;
+    animation-delay: 3s;
 }
 
 /* BOTTOM-RIGHT Corner */
@@ -87,7 +98,7 @@
     bottom: 12.5vw;
     right: 15vw;
     transform-origin: 0% 0%;
-    animation-delay: 15s;
+    animation-delay: 5s;
 }
 
 /* ARROW ICON (Updated with Animation) */
@@ -104,9 +115,8 @@
 
 #arrow-down {
     bottom: 8.5vw;
-    left: 48%;
-    /* You must combine the centering transform with the animation transform */
-    transform: translateX(-50%); 
+    left: 50%; /* Changed from 48% to 50% for proper centering */
+    /* REMOVED transform: translateX(-50%); - It's now in the keyframes */
 }
 .arrow {
     position: absolute;
@@ -162,6 +172,7 @@
         top: -20vw;
         right: 10vw; /* Pushed far right */
         transform-origin: 100% 100%;
+        transform: rotate(10deg); 
     }
     
     #corner-bl {
@@ -181,14 +192,14 @@
     /* --- ARROW ICON --- */
     .arrow {
         /* Increase size significantly for tappability (minimum 48x48 pixels) */
-        width: 3vw; 
-        height: 3vw;
+        width: 2vw; 
+        height: 2vw;
     }
     
     #arrow-down {
         /* Position lower down and center */
         bottom: 35vw; /* Move closer to the bottom edge */
-        left: 44%;
+        left: 45%;
         transform: translateX(-50%); 
     }
     
@@ -201,34 +212,121 @@
 
 /* --- KEYFRAMES --- */
 
-/* Animation for subtle floating, rotating movement */
+/* Animation for subtle floating, rotating movement (More dramatic) */
 @keyframes corner-float {
     0% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(0px, 0px) rotate(0deg);
     }
-    25% {
-        transform: translate(5px, -5px) rotate(10deg);
+    20% {
+        transform: translate(15px, -10px) rotate(15deg); /* Larger movement and rotation */
     }
-    50% {
-        transform: translate(-5px, 5px) rotate(-10deg);
+    40% {
+        transform: translate(-10px, 5px) rotate(-10deg);
     }
-    75% {
-        transform: translate(5px, 5px) rotate(5deg);
+    60% {
+        transform: translate(10px, 15px) rotate(5deg);
+    }
+    80% {
+        transform: translate(-5px, -15px) rotate(-5deg);
     }
     100% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(0px, 0px) rotate(0deg);
     }
 }
 
-/* Animation for the arrow button */
+/* Animation for the arrow button (Centering transform included) */
 @keyframes arrow-bounce {
     0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0); /* Stays in place */
+        transform: translateX(-50%) translateY(0); /* Combined transforms */
     }
     40% {
-        transform: translateY(-8px); /* Jumps up */
+        transform: translateX(-50%) translateY(-10px); /* Larger jump up */
     }
     60% {
-        transform: translateY(-4px); /* Smaller jump up */
+        transform: translateX(-50%) translateY(-5px); /* Smaller jump up */
     }
+}
+
+.content {
+    position: relative; 
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* THIS IS CRUCIAL TO HIDE OFF-SCREEN PARTS OF CORNER SVGS */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- NEW WRAPPER STYLES (Creates the side-by-side layout) --- */
+.content-wrapper {
+    width: 75%; 
+    display: flex; /* THIS is the key row container */
+    justify-content: space-between; /* Puts space between the h1 and the message group */
+    align-items: flex-start; /* Aligns content to the top */
+    padding: 20px;
+}
+
+/* --- INDIVIDUAL ELEMENT STYLES --- */
+.main-greeting {
+    font-size: 8vw; 
+    line-height: 1;
+    flex-shrink: 0; /* Prevents shrinking */
+    margin-right: 3vw;
+}
+
+.message-group {
+    /* THIS is the nested column container */
+    display: flex;
+    flex-direction: column; /* Stacks the children (P and H2) vertically */
+    flex-grow: 1; /* Allows this group to take up all available horizontal space */
+    padding-top: 1.5vw; /* Align top edge of P/H2 with 'H' in Hello */
+}
+
+.body-message {
+    font-size: 1.5vw;
+    line-height: 1.4;
+    /* Allow the paragraph to flow naturally within the available space */
+    max-width: 100%; 
+    margin-bottom: 2vw;
+}
+
+.closing-note {
+    font-size: 1.5vw;
+    font-weight: normal;
+    text-align: left; /* Pushes the text to the right side of the message-group */
+}
+
+/* --- Styles for the Button Link Container (.github-link) --- */
+.followbtn {
+    /* Make the link container a flex item to align the SVG and text horizontally */
+    display: flex;
+    align-items: center; /* Vertically center the icon and text */
+    
+    /* Positioning */
+    align-self: flex-start; /* Aligns the entire link group to the left of the message-group */
+    margin-bottom: 2vw;
+
+    color: currentColor;
+    
+    /* Optional Transition for Hover Effect */
+    transition: opacity 0.2s ease-out;
+
+    /* --- ADD THESE LINES TO SCALE THE BUTTON --- */
+    /* Adjust this value (e.g., 20px, 1.5em, 5vh) to make the button smaller or larger. */
+    height: 5em; 
+    
+    /* Auto-set width to maintain the aspect ratio defined in the viewBox="0 0 55 15" */
+    width: auto; 
+}
+
+.followbtn:hover {
+    opacity: 0.7; /* Dim slightly on hover */
+}
+
+.footer {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 1vw;
+    color: currentColor;
 }
