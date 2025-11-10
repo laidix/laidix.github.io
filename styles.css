@@ -129,25 +129,25 @@
 
 /* In your styles.css, INSIDE the @media (max-width: 600px) block */
 
-@media (max-width: 600px) {
+@media (max-width: 1440px) {
 
     /* --- TEXT SIZING --- */
     .hero h1 {
         /* Increase the main title size for better impact */
-        font-size: 18vw; 
-        margin-bottom: -7vw; /* Adjust for better spacing */
+        font-size: 12vw; 
+        margin-bottom: -2vw; /* Adjust for better spacing */
     }
 
     .hero p {
         /* Slightly increase the welcome text size */
-        font-size: 6vw; 
+        font-size: 4vw; 
     }
     
     /* --- CORNER SVGS: SIZE & POSITION --- */
     .corner-svg {
         /* Set a size that looks good while maintaining the peaking effect */
-        width: 50vw; 
-        height: 50vw; 
+        width: 20vw; 
+        height: 20vw; 
     }
     
     /* Reposition based on the new 50vw size (use half of the width/height) */
@@ -159,22 +159,21 @@
     }
     
     #corner-tr {
-        top: -25vw;
-        right: -25vw; /* Pushed far right */
-        transform-origin: 0% 100%;
-        transform: rotate(35deg); 
+        top: -20vw;
+        right: 10vw; /* Pushed far right */
+        transform-origin: 100% 100%;
     }
     
     #corner-bl {
-        bottom: -25vw;
+        bottom: 15vw;
         left: -25vw;
         transform-origin: 100% 0%;
         transform: rotate(5deg); 
     }
     
     #corner-br {
-        bottom: -25vw;
-        right: -25vw;
+        bottom: 20vw;
+        right: 20vw;
         transform-origin: 0% 0%;
         transform: rotate(10deg); 
     }
@@ -182,14 +181,14 @@
     /* --- ARROW ICON --- */
     .arrow {
         /* Increase size significantly for tappability (minimum 48x48 pixels) */
-        width: 10vw; 
-        height: 10vw;
+        width: 3vw; 
+        height: 3vw;
     }
     
     #arrow-down {
         /* Position lower down and center */
-        bottom: 5vw; /* Move closer to the bottom edge */
-        left: 50%;
+        bottom: 35vw; /* Move closer to the bottom edge */
+        left: 44%;
         transform: translateX(-50%); 
     }
     
