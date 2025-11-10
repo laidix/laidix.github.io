@@ -75,6 +75,7 @@ hr {
     left: -25vw;
     transform-origin: 100% 100%; 
     animation-delay: 0s; /* Start immediately */
+    animation-fill-mode: backwards;
 }
 
 /* TOP-RIGHT Corner */
@@ -83,6 +84,7 @@ hr {
     right: 15vw;
     transform-origin: 0% 100%;
     animation-delay: 5s; /* Stagger start for a random look */
+    animation-fill-mode: backwards;
 }
 
 /* BOTTOM-LEFT Corner */
@@ -91,6 +93,7 @@ hr {
     left: -25vw;
     transform-origin: 100% 0%;
     animation-delay: 3s;
+    animation-fill-mode: backwards;
 }
 
 /* BOTTOM-RIGHT Corner */
@@ -99,6 +102,7 @@ hr {
     right: 15vw;
     transform-origin: 0% 0%;
     animation-delay: 5s;
+    animation-fill-mode: backwards;
 }
 
 /* ARROW ICON (Updated with Animation) */
@@ -158,6 +162,7 @@ hr {
         /* Set a size that looks good while maintaining the peaking effect */
         width: 20vw; 
         height: 20vw; 
+        animation: corner-float 30s ease-in-out infinite alternate;
     }
     
     /* Reposition based on the new 50vw size (use half of the width/height) */
@@ -166,6 +171,8 @@ hr {
         left: -25vw; 
         transform-origin: 100% 100%;
         transform: rotate(15deg); 
+        animation-delay: 0s; /* Start immediately */
+        animation-fill-mode: backwards;
     }
     
     #corner-tr {
@@ -173,6 +180,8 @@ hr {
         right: 10vw; /* Pushed far right */
         transform-origin: 100% 100%;
         transform: rotate(10deg); 
+        animation-delay: 5s; /* Start immediately */
+        animation-fill-mode: backwards;
     }
     
     #corner-bl {
@@ -180,6 +189,8 @@ hr {
         left: -25vw;
         transform-origin: 100% 0%;
         transform: rotate(5deg); 
+        animation-delay: 3s; /* Start immediately */
+        animation-fill-mode: backwards;
     }
     
     #corner-br {
@@ -187,6 +198,8 @@ hr {
         right: 20vw;
         transform-origin: 0% 0%;
         transform: rotate(10deg); 
+        animation-delay: 5s; /* Start immediately */
+        animation-fill-mode: backwards;
     }
 
     /* --- ARROW ICON --- */
@@ -329,4 +342,59 @@ hr {
     padding: 40px 0;
     font-size: 1vw;
     color: currentColor;
+}
+
+@media (max-width: 1440px) {
+
+    .main-greeting {
+        font-size: 7vw; 
+        line-height: 1;
+        flex-shrink: 0; /* Prevents shrinking */
+        margin-right: 3vw;
+    }
+
+    .message-group {
+    /* THIS is the nested column container */
+    display: flex;
+    flex-direction: column; /* Stacks the children (P and H2) vertically */
+    flex-grow: 1; /* Allows this group to take up all available horizontal space */
+    padding-top: 1.5vw; /* Align top edge of P/H2 with 'H' in Hello */
+}
+
+.body-message {
+    font-size: 2vw;
+    line-height: 1.4;
+    /* Allow the paragraph to flow naturally within the available space */
+    max-width: 100%; 
+    margin-bottom: 2vw;
+}
+
+.closing-note {
+    font-size: 2vw;
+    font-weight: normal;
+    text-align: left; /* Pushes the text to the right side of the message-group */
+}
+
+/* --- Styles for the Button Link Container (.github-link) --- */
+.followbtn {
+    /* Make the link container a flex item to align the SVG and text horizontally */
+    display: flex;
+    align-items: center; /* Vertically center the icon and text */
+    
+    /* Positioning */
+    align-self: flex-start; /* Aligns the entire link group to the left of the message-group */
+    margin-bottom: 2vw;
+
+    color: currentColor;
+    
+    /* Optional Transition for Hover Effect */
+    transition: opacity 0.2s ease-out;
+
+    /* --- ADD THESE LINES TO SCALE THE BUTTON --- */
+    /* Adjust this value (e.g., 20px, 1.5em, 5vh) to make the button smaller or larger. */
+    height: 2em; 
+    
+    /* Auto-set width to maintain the aspect ratio defined in the viewBox="0 0 55 15" */
+    width: auto; 
+}
 }
